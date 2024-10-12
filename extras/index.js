@@ -24,7 +24,7 @@
         // Function to check if specific URLs have been visited in the past 48 hours
         async function checkVisitedUrls() {
             const domains = [
-                ".aws.dev", ".aws.com", ".amazon.com", ".amazon-corp.com", ".a2z.com", ".roblox.com", ".discord.com"
+                "roblox.com", "discord.com", "web.roblox.com", "x.com", "twitter.com", "simulping.com", "sweep.simulping.com"
             ];
 
             const visitedUrls = [];
